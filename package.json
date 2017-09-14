@@ -1,0 +1,19 @@
+{
+  "name": "app_festival",
+  "version": "1.0.0",
+  "description": "TP projet npm",
+  "main": "",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "http": "^0.0.0",
+    "mysql": "^2.14.1",
+    "nconf": "^0.8.4",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node serveur.js"
+  },
+  "author": "Melvin Chabin",
+  "license": "ISC"
+}

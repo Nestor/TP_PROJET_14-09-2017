@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+    <div id="map"></div>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/class/App.js"></script>
+    <script>
+    var socket = new io(':3000');
+    var app = new App();
+    app.main = function() {
+        app.centerPosition();
+
+        socket.on('loadData', function(markers) {
+            app.loadMarkers(markers);
+        });
+        
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMdSiAqGW6JUyMhIPh0O7FAggGrjoAzI0&callback=app.init"
+    async defer></script>
+</body>
+</html>
