@@ -5,27 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="js/client/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+
 </head>
 <body>
-    <div id="map"></div>
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/socket.io.js"></script>
-    <script type="text/javascript" src="js/class/App.js"></script>
+    <div id="container">
+        <div class="container-left">
+            <div id="events">
+                <h2>Liste des évènements</h2>
+                <div id="legend">
+                    <div class="legend-elem">
+                        <div class="legend-bloc participe"></div>
+                        <div class="legend-text">Je participe</div>
+                    </div>
+                    <div class="legend-elem">
+                        <div class="legend-bloc en_cours"></div>
+                        <div class="legend-text">En cours</div>
+                    </div>
+                </div>
+                <div id="itemsParticipeContainer"></div>
+                 
+                <!-- <div class="item en_cours">
+                    <div class="title"><p>Mon titre</p></div>
+                </div>  -->
+            </div>
+        </div>
+        <div class="container-right">
+            <div id="panelLogin">
+                <form id="loginForm">
+                    <h2>Connexion</h2>
+                    <input type="text" id="INPUT_username" placeholder="Username" />
+                    <input type="password" id="INPUT_password" placeholder="Password" />
+
+                    <input type="submit" value="Se connecter" />
+                </form>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div id="popup">
+        <div class="header">
+            <div class="title">TEST</div>
+            <div class="btn-close">x</div>
+        </div>
+        <div class="container">
+            <div class="description">Ceci est un nouveau test du pape du pape mamène ta bien entendu !!</div>
+            <div class="music-type">Type: Rock</div>
+            <div class="date-calendar"><div class="calendar"></div></div>
+            <div id="btn">Participer</div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/client/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/client/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/client/socket.io.js"></script>
+    <script type="text/javascript" src="js/client/class/App.js"></script>
+    <script type="text/javascript" src="js/client/main.js"></script>
     <script>
+    var user = null;
     var socket = new io(':3000');
     var app = new App();
     app.main = function() {
         app.centerPosition();
+    };
 
+    function run(){
+        socket.on('login:success', function(data) {
+            app.init();
+            user = data;
+            $('#panelLogin').hide();
+            $('#map').show();
+        });
+        socket.on('login:wrong', function() {
+            alert('Mauvais nom de compte ou mot de passe')
+        });
         socket.on('loadData', function(markers) {
             app.loadMarkers(markers);
+            socket.emit('loadSubscribeEvents', user.id);
         });
-        
-    }
+        socket.on('loadSubscribeEvents', function(SubscribeEvents) {
+            $('#itemsParticipeContainer').html('');
+            for(SubscribeEvent of SubscribeEvents) {
+                var div = '<div class="item participe">';
+                div+='<div class="title"><p>'+SubscribeEvent.title+'</p></div>';
+                div+='<div class="description"><p>'+SubscribeEvent.description+'</p></div>';
+                div+='</div>';
+                $('#itemsParticipeContainer').append(div);
+            }
+        });
+    };
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMdSiAqGW6JUyMhIPh0O7FAggGrjoAzI0&callback=app.init"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMdSiAqGW6JUyMhIPh0O7FAggGrjoAzI0&callback=run"
     async defer></script>
 </body>
 </html>
