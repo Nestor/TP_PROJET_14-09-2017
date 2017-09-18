@@ -36,6 +36,8 @@ class App {
                     "top": position.pixel.y,
                     "left": position.pixel.x+$('#container .container-left').width()
                 });
+                $input.$latitude.val(position.latLng.lat);
+                $input.$longitude.val(position.latLng.lng);
                 if(that.showAdminPanel == false) {
                     $('#adminPanel').fadeIn();
                     that.showAdminPanel = true;
@@ -44,9 +46,6 @@ class App {
                     $('#adminPanel').fadeOut();
                     that.showAdminPanel = false;
                 }
-
-                var position = position.latLng;
-                console.log(position);
             }
         });
     }

@@ -1,6 +1,14 @@
 var $input = {
     $username: $('#INPUT_username'),
-    $password: $('#INPUT_password')
+    $password: $('#INPUT_password'),
+
+    $titre: $('#ADMTitre'),
+    $description: $('#ADMDescription'),
+    $latitude: $('#ADMLatitude'),
+    $longitude: $('#ADMLongitude'),
+    $date_debut: $('#ADMDate_debut'),
+    $date_fin: $('#ADMDate_fin'),
+    $icon: $('#ADMIcon')
 };
 
 
@@ -18,4 +26,7 @@ $( "#popup" ).on( "click", "#btn-unsub", function() {
 });
 $('#popup').on('click', '.header .btn-close', function() {
     $('#popup').fadeToggle();
+});
+$('#adminAddMarker').submit(function(e) {
+    e.preventDefault();
 });

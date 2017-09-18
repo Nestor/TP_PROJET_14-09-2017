@@ -61,10 +61,24 @@
         </div>
     </div>
     <div id="adminPanel">
-        <input type="text" placeholder="titre"/>
-        <textarea placeholder="Votre description"></textarea>
-        laltitude: <input type="text" value="" />
-        logintude: <input type="text" value="" />
+        <form id="adminAddMarker">
+            Titre: <input type="text" id="ADMTitre" placeholder="titre"/><br/>
+            Description<br/> <textarea id="ADMDescription" placeholder="Votre description"></textarea><br/>
+            latitude: <input id="ADMLatitude" type="text" value="" /><br/>
+            logintude: <input id="ADMLongitude" type="text" value="" /><br/>
+            date début: <input id="ADMDate_debut" type="text" /><br/>
+            date fin: <input id="ADMDate_fin" type="text" /><br/>
+            icon: <input id="ADMIcon" type="text" /><br/><br/>
+            Type: <br/>
+            <label for="CB_HipHop">Hip-Hop</label><input id="CB_HipHop" type="checkbox"><br/>
+            <label for="CB_Trap">Trap</label><input id="CB_Trap" type="checkbox"><br/>
+            <label for="CB_Reggaeton">Reggaeton</label><input id="CB_Reggaeton" type="checkbox"><br/>
+            <label for="CB_Reggae">Reggae</label><input id="CB_Reggae" type="checkbox"><br/>
+            <label for="CB_House">House</label><input id="CB_House" type="checkbox"><br/>
+            <label for="CB_Rock">Rock</label><input id="CB_Rock" type="checkbox"><br/>
+            <label for="CB_Métal">Métal</label><input id="CB_Métal" type="checkbox"><br/><br/>
+            <input type="submit" value="Ajouter" />
+        </form>
     </div>
     <script type="text/javascript" src="js/client/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/client/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
