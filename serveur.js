@@ -1,11 +1,10 @@
 var http    = require('http');
 var mysql   = require('mysql');
 var fs      = require('fs'),
-nconf       = require('nconf');
-var colors  = require('colors/safe');
-var sha1 = require('sha1');
-var App = require("./js/serveur/class/App");
+nconf       = require('nconf'); // pour le fichier de configuration
 
+/* pour avoir une coloration au niveau des logs console */
+var colors  = require('colors/safe');
 colors.setTheme({
   info: 'yellow',
   help: 'blue',
@@ -13,8 +12,16 @@ colors.setTheme({
   debug: 'green'
 });
 
+// pour être 100% safe
+var sha1 = require('sha1');
+
+// Les class
+var App = require("./js/serveur/class/App");
+
+// Importation du fichier config
 nconf.argv().env().file({ file: __dirname+'/config/app-config.json' });
 
+// On applique la configuration MYSQL du fichier app-config
 var con = mysql.createConnection({
   host: nconf.get('database:host'),
   port: nconf.get('database:port'),
@@ -22,18 +29,23 @@ var con = mysql.createConnection({
   password: nconf.get('database:password'),
   database: nconf.get('database:database')
 });
-var app = new App(con);
 
+var app = new App(con);
 var httpServer = http.createServer();
 httpServer.listen(nconf.get('app:port'), function() {
     console.log(colors.info('Serveur en écoute sur le port ')+nconf.get('app:port'));
 });
 var io = require('socket.io').listen(httpServer);
 
+/* Gestion des erreurs MYSQL */
 con.on('error', function(err) {
   console.log(colors.error(err.code));
 });
 
+/* 
+    Evènements du socket
+    Les requetes MYSQL sont dans la class App
+*/
 io.sockets.on("connection", function( socket ){
     console.log(colors.info("L'utilisateur ") + socket.id + colors.info(" vient de se connecter"));
     socket.on('login', function(username, password) {
@@ -55,6 +67,13 @@ io.sockets.on("connection", function( socket ){
     });
     socket.on('SubscribeEvent', function(userId, festivalId) {
         app.addSubscribeEvent(festivalId, userId ,function() {
+            app.loadSubscribeEvents(userId, function(result) {
+                socket.emit('loadSubscribeEvents', result);
+            });
+        });
+    });
+    socket.on('UnSubscribeEvent', function(userId, festivalId) {
+        app.removeSubscribeEvent(festivalId, userId ,function() {
             app.loadSubscribeEvents(userId, function(result) {
                 socket.emit('loadSubscribeEvents', result);
             });

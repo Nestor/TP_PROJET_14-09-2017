@@ -13,6 +13,8 @@
 <body>
     <div id="container">
         <div class="container-left">
+            <div id="adminMain"></div>
+            
             <div id="events">
                 <h2>Liste des évènements</h2>
                 <div id="legend">
@@ -36,8 +38,8 @@
             <div id="panelLogin">
                 <form id="loginForm">
                     <h2>Connexion</h2>
-                    <input type="text" id="INPUT_username" placeholder="Username" />
-                    <input type="password" id="INPUT_password" placeholder="Password" />
+                    <input type="text" id="INPUT_username" value="zoukilama" placeholder="Username" />
+                    <input type="password" id="INPUT_password" value="admin" placeholder="Password" />
 
                     <input type="submit" value="Se connecter" />
                 </form>
@@ -54,39 +56,44 @@
             <div class="description">Ceci est un nouveau test du pape du pape mamène ta bien entendu !!</div>
             <div class="music-type">Type: Rock</div>
             <div class="date-calendar"><div class="calendar"></div></div>
-            <div id="btn">Participer</div>
+            <!-- <div id="btn">Participer</div> -->
+            <div id="htmlBtn"></div>
         </div>
+    </div>
+    <div id="adminPanel">
+        <input type="text" placeholder="titre"/>
+        <textarea placeholder="Votre description"></textarea>
+        laltitude: <input type="text" value="" />
+        logintude: <input type="text" value="" />
     </div>
     <script type="text/javascript" src="js/client/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/client/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/client/socket.io.js"></script>
+    <script type="text/javascript" src="js/client/class/User.js"></script>
     <script type="text/javascript" src="js/client/class/App.js"></script>
     <script type="text/javascript" src="js/client/main.js"></script>
     <script>
-    var user = null;
-    var socket = new io(':3000');
     var app = new App();
-    app.main = function() {
-        app.centerPosition();
-    };
-
+    var user=null;
     function run(){
-        socket.on('login:success', function(data) {
+        app.socket.on('login:success', function(data) {
             app.init();
-            user = data;
+            user = new User(data);
             $('#panelLogin').hide();
             $('#map').show();
         });
-        socket.on('login:wrong', function() {
+        app.socket.on('login:wrong', function() {
             alert('Mauvais nom de compte ou mot de passe')
         });
-        socket.on('loadData', function(markers) {
+        app.socket.on('loadData', function(markers) {
             app.loadMarkers(markers);
-            socket.emit('loadSubscribeEvents', user.id);
+            app.socket.emit('loadSubscribeEvents', user.id);
         });
-        socket.on('loadSubscribeEvents', function(SubscribeEvents) {
+        app.socket.on('loadSubscribeEvents', function(SubscribeEvents) {
             $('#itemsParticipeContainer').html('');
             for(SubscribeEvent of SubscribeEvents) {
+                user.subscribeEvents.push(SubscribeEvent.id);
+                // app.subscribeEventList.push(SubscribeEvent.id);
                 var div = '<div class="item participe">';
                 div+='<div class="title"><p>'+SubscribeEvent.title+'</p></div>';
                 div+='<div class="description"><p>'+SubscribeEvent.description+'</p></div>';

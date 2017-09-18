@@ -103,12 +103,21 @@ body {
     font-size: 20px;
     text-align: center;
 }
-#btn {
-    width: 100px;
+#btn-sub {
+    width: 150px;
     height: 20px;
     background-color: #2ecc71;
     border-radius: 8px;
     text-align: center;
+    color: #fff;
+}
+#btn-unsub {
+    width: 150px;
+    height: 20px;
+    background-color: #c0392b;
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
 }
 #popup {
     width: 30vw;
@@ -162,4 +171,10 @@ body {
     position: relative;
     top: 0px;
     left: 25%;
+}
+#adminPanel {
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    display: none;
 }

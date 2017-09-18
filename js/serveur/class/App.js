@@ -23,7 +23,12 @@ class App {
         });
     }
     addSubscribeEvent(eventId, userId, callback) {
-        this.con.query("INSERT INTO SubscribeEvents (eventId, userId) VALUES ('"+eventId+"', '"+userId+"')", function (err, result) {
+        this.con.query("INSERT INTO subscribeevents (eventId, userId) VALUES ('"+eventId+"', '"+userId+"')", function (err, result) {
+            callback(result);
+        });
+    }
+    removeSubscribeEvent(eventId, userId, callback) {
+        this.con.query("DELETE FROM subscribeevents WHERE eventId=? AND userId=?", [eventId, userId] , function (err, result) {
             callback(result);
         });
     }
