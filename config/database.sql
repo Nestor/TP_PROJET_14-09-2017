@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-09-14 16:52:57
+Date: 2017-09-18 08:57:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `accounts`
+-- ----------------------------
+DROP TABLE IF EXISTS `accounts`;
+CREATE TABLE `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `grade` varchar(255) NOT NULL DEFAULT 'user',
+  `registerDate` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of accounts
+-- ----------------------------
+INSERT INTO `accounts` VALUES ('1', 'zoukilama', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'user', '15/09/2017');
+
 -- ----------------------------
 -- Table structure for `festivals`
 -- ----------------------------
@@ -33,5 +52,22 @@ CREATE TABLE `festivals` (
 -- ----------------------------
 -- Records of festivals
 -- ----------------------------
-INSERT INTO `festivals` VALUES ('1', 'Pole emploi', 'Service pour aider à la recherche d\'emploi', '14/09/2017', '20/09/2017', 'http://127.0.0.1/appFestival/images/001-businessman.png', '42.67473720139164', '2.8018569946289062');
-INSERT INTO `festivals` VALUES ('2', 'Test', 'Test', '14/09/2017', '23/09/2017', 'http://127.0.0.1/appFestival/images/002-businesswoman.png', '42.672930786132812', '2.7661930786132812');
+INSERT INTO `festivals` VALUES ('1', 'Pole emploi', 'Service pour aider à la recherche d\'emploi', '2017-09-14', '2017-09-23', 'http://127.0.0.1/appFestival/images/001-businessman.png', '42.67473720139164', '2.8018569946289062');
+INSERT INTO `festivals` VALUES ('2', 'Test', 'Test', '2017-09-14', '2017-09-25', 'http://127.0.0.1/appFestival/images/002-businesswoman.png', '42.672930786132812', '2.7661930786132812');
+
+-- ----------------------------
+-- Table structure for `subscribeevents`
+-- ----------------------------
+DROP TABLE IF EXISTS `subscribeevents`;
+CREATE TABLE `subscribeevents` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `eventId` int(12) NOT NULL,
+  `userId` int(12) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of subscribeevents
+-- ----------------------------
+INSERT INTO `subscribeevents` VALUES ('12', '2', '1');
+INSERT INTO `subscribeevents` VALUES ('13', '1', '1');
