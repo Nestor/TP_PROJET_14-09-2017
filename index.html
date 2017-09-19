@@ -14,7 +14,15 @@
     <div id="container">
         <div class="container-left">
             <div id="adminMain"></div>
-            
+            <div id="">
+                <label for="CBS_HipHop">Hip-Hop</label><input id="CBS_HipHop" class="cbs" data-type="hiphop" type="checkbox"><br/>
+                <label for="CBS_Trap">Trap</label><input id="CBS_Trap" class="cbs" data-type="trap" type="checkbox"><br/>
+                <label for="CBS_Reggaeton">Reggaeton</label><input id="CBS_Reggaeton" class="cbs" data-type="reggaeton" type="checkbox"><br/>
+                <label for="CBS_Reggae">Reggae</label><input id="CBS_Reggae" class="cbs" data-type="reggae" type="checkbox"><br/>
+                <label for="CBS_House">House</label><input id="CBS_House" class="cbs" data-type="house" type="checkbox"><br/>
+                <label for="CBS_Rock">Rock</label><input id="CBS_Rock" class="cbs" data-type="rock" type="checkbox"><br/>
+                <label for="CBS_Métal">Métal</label><input id="CBS_Métal" class="cbs" data-type="metal" type="checkbox">
+            </div>
             <div id="events">
                 <h2>Liste des évènements</h2>
                 <div id="legend">
@@ -68,15 +76,24 @@
             logintude: <input id="ADMLongitude" type="text" value="" /><br/>
             date début: <input id="ADMDate_debut" type="text" /><br/>
             date fin: <input id="ADMDate_fin" type="text" /><br/>
-            icon: <input id="ADMIcon" type="text" /><br/><br/>
+            <!-- icon: <input id="ADMIcon" type="text" /><br/><br/> -->
+            Icon: <br><select id="ADMIcon">
+                <option value="01" selected>Disque dorée</option> 
+                <option value="02">Disque rouge et noir</option>
+                <option value="03">Disque noir et blanc</option>
+                <option value="04">Disque noir</option>
+                <option value="05">Disque cyan</option>
+                <option value="06">Disque bleu marin</option>
+                <option value="07">Disque claire</option>
+            </select><br/><br/>
             Type: <br/>
-            <label for="CB_HipHop">Hip-Hop</label><input id="CB_HipHop" type="checkbox"><br/>
-            <label for="CB_Trap">Trap</label><input id="CB_Trap" type="checkbox"><br/>
-            <label for="CB_Reggaeton">Reggaeton</label><input id="CB_Reggaeton" type="checkbox"><br/>
-            <label for="CB_Reggae">Reggae</label><input id="CB_Reggae" type="checkbox"><br/>
-            <label for="CB_House">House</label><input id="CB_House" type="checkbox"><br/>
-            <label for="CB_Rock">Rock</label><input id="CB_Rock" type="checkbox"><br/>
-            <label for="CB_Métal">Métal</label><input id="CB_Métal" type="checkbox"><br/><br/>
+            <label for="CB_HipHop">Hip-Hop</label><input id="CB_HipHop" data-type="hiphop" type="checkbox"><br/>
+            <label for="CB_Trap">Trap</label><input id="CB_Trap" data-type="trap" type="checkbox"><br/>
+            <label for="CB_Reggaeton">Reggaeton</label><input id="CB_Reggaeton" data-type="reggaeton" type="checkbox"><br/>
+            <label for="CB_Reggae">Reggae</label><input id="CB_Reggae" data-type="reggae" type="checkbox"><br/>
+            <label for="CB_House">House</label><input id="CB_House" data-type="house" type="checkbox"><br/>
+            <label for="CB_Rock">Rock</label><input id="CB_Rock" data-type="rock" type="checkbox"><br/>
+            <label for="CB_Métal">Métal</label><input id="CB_Métal" data-type="metal" type="checkbox"><br/><br/>
             <input type="submit" value="Ajouter" />
         </form>
     </div>
@@ -106,16 +123,29 @@
         app.socket.on('loadSubscribeEvents', function(SubscribeEvents) {
             $('#itemsParticipeContainer').html('');
             for(SubscribeEvent of SubscribeEvents) {
+                var etat = app.dateDiff(SubscribeEvent.date_debut);
                 user.subscribeEvents.push(SubscribeEvent.id);
-                // app.subscribeEventList.push(SubscribeEvent.id);
-                var div = '<div class="item participe">';
+                if(etat=='en_cours') {
+                    var div = '<div class="item en_cours">';
+                } else {
+                    var div = '<div class="item participe">';
+                }
                 div+='<div class="title"><p>'+SubscribeEvent.title+'</p></div>';
                 div+='<div class="description"><p>'+SubscribeEvent.description+'</p></div>';
+                div+='<div class="btn-loc" data-lat="'+SubscribeEvent.latitude+'" data-lng="'+SubscribeEvent.longitude+'">Localiser</div>';
+                if(etat=='en_cours') {
+                    div+='Festival en cours';
+                } else {
+                    div+=etat;
+                }
                 div+='</div>';
                 $('#itemsParticipeContainer').append(div);
             }
         });
     };
+
+    $input.$date_debut.datepicker(app.DPOptions);
+    $input.$date_fin.datepicker(app.DPOptions);
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMdSiAqGW6JUyMhIPh0O7FAggGrjoAzI0&callback=run"
     async defer></script>

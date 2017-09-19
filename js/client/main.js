@@ -8,7 +8,8 @@ var $input = {
     $longitude: $('#ADMLongitude'),
     $date_debut: $('#ADMDate_debut'),
     $date_fin: $('#ADMDate_fin'),
-    $icon: $('#ADMIcon')
+    $icon: $('#ADMIcon'),
+    $checkbox: $('input[type="checkbox"]')
 };
 
 
@@ -29,4 +30,36 @@ $('#popup').on('click', '.header .btn-close', function() {
 });
 $('#adminAddMarker').submit(function(e) {
     e.preventDefault();
+    var styleType = "";
+
+    for(var i=0; i<$input.$checkbox.length; i++) {
+        if($($input.$checkbox[i]).is(':checked')) {
+            styleType += $($input.$checkbox[i]).attr('data-type')+' ';
+        }
+    }
+    styleType = styleType.substr(0,styleType.length-1);
+
+    data = [
+        $input.$titre.val(),
+        $input.$description.val(),
+        $input.$date_debut.val(),
+        $input.$date_fin.val(),
+        'images/type/'+$input.$icon.val()+'.png',
+        $input.$latitude.val(),
+        $input.$longitude.val(),
+        styleType
+    ];
+    app.socket.emit('addEvent', data);
+});
+$( "#itemsParticipeContainer" ).on( "click", ".btn-loc", function() {
+    app.setPosition($(this).attr('data-lat'), $(this).attr('data-lng'));
+});
+$('.cbs').click(function(){
+    if($(this).is(':checked')) {
+        app.addFilter($(this).attr('data-type'));
+    } else {
+        app.removeFilter($(this).attr('data-type'));
+    }
+    app.applyFilter();
+    
 });

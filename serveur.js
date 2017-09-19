@@ -79,4 +79,12 @@ io.sockets.on("connection", function( socket ){
             });
         });
     });
+    socket.on('addEvent', function(data) {
+        app.addEvent(data, function() {
+            // console.log(result);
+            app.loadData(function(data){
+                socket.emit('loadData', data);
+            });
+        });
+    });
 });

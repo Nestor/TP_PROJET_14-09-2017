@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-09-18 17:04:55
+Date: 2017-09-19 16:40:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,13 +48,13 @@ CREATE TABLE `festivals` (
   `longitude` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of festivals
 -- ----------------------------
-INSERT INTO `festivals` VALUES ('1', 'Pole emploi', 'Service pour aider à la recherche d\'emploi', '2017-09-14', '2017-09-23', 'http://127.0.0.1/appFestival/images/001-businessman.png', '42.67473720139164', '2.8018569946289062', 'reggae');
-INSERT INTO `festivals` VALUES ('2', 'Test', 'Test', '2017-09-14', '2017-09-25', 'http://127.0.0.1/appFestival/images/002-businesswoman.png', '42.672930786132812', '2.7661930786132812', 'rock');
+INSERT INTO `festivals` VALUES ('9', 'Electrobeach', 'Evènement musical', '2017/09/19', '2018/09/23', 'images/type/01.png', '42.79706176043431', '3.0313661601394415', 'house hiphop');
+INSERT INTO `festivals` VALUES ('14', 'Nouveau test', 'Ceci est rien du tout à part un teste', '2017/09/20', '2017/09/25', 'images/type/02.png', '42.77776339867919', '2.9034805297851562', 'hiphop');
 
 -- ----------------------------
 -- Table structure for `subscribeevents`
@@ -65,9 +65,12 @@ CREATE TABLE `subscribeevents` (
   `eventId` int(12) NOT NULL,
   `userId` int(12) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of subscribeevents
 -- ----------------------------
-INSERT INTO `subscribeevents` VALUES ('76', '2', '1');
+INSERT INTO `subscribeevents` VALUES ('77', '2', '1');
+INSERT INTO `subscribeevents` VALUES ('80', '9', '1');
+INSERT INTO `subscribeevents` VALUES ('81', '12', '1');
+INSERT INTO `subscribeevents` VALUES ('82', '14', '1');

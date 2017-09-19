@@ -32,5 +32,10 @@ class App {
             callback(result);
         });
     }
+    addEvent(data, callback) {
+        this.con.query("INSERT INTO festivals (title, description, date_debut, date_fin, icon, latitude, longitude, type) VALUES (?,?,?,?,?,?,?,?)", data , function (err, result) {
+            callback();
+        });
+    }
 }
 module.exports = App;

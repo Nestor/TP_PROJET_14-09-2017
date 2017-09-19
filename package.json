@@ -1,19 +1,28 @@
 {
-  "name": "app_festival",
+  "name": "appfestival",
   "version": "1.0.0",
-  "description": "TP projet npm",
-  "main": "",
+  "description": "Tout ce situe dans le dossier **./config**\r n'oublier pas d'installer les NPM\r ```sh\r $ npm install\r ```\r et jquery-ui avec le date picker\r ```sh\r jquery-ui-1.12.1\r ```",
+  "main": "serveur.js",
   "dependencies": {
     "colors": "^1.1.2",
     "http": "^0.0.0",
     "mysql": "^2.14.1",
     "nconf": "^0.8.4",
+    "sha1": "^1.1.1",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {
     "test": "node serveur.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoukilama/TP_PROJET_14-09-2017.git"
+  },
   "author": "Melvin Chabin",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoukilama/TP_PROJET_14-09-2017/issues"
+  },
+  "homepage": "https://github.com/zoukilama/TP_PROJET_14-09-2017#readme"
 }
